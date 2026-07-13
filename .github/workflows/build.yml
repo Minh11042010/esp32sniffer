@@ -19,7 +19,6 @@ jobs:
           esp_idf_version: 'v5.1'
           target: 'esp32c3'
           path: '.'
-          # We add a command string to clear old files and explicitly assign the C3 target profile
           command: |
             rm -f sdkconfig
             idf.py set-target esp32c3
@@ -30,7 +29,6 @@ jobs:
         with:
           name: esp32c3-sniffer-firmware
           path: |
-            build/bootloader/bootloader.bin
-            build/partition_table/partition-table.bin
-            build/esp32sniffer.bin
+            build/*.bin
+            build/**/*.bin
             build/flasher_args.json
