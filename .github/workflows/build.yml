@@ -1,0 +1,31 @@
+name: Build ESP32-C3 Firmware
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch: # Allows you to trigger the build manually
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Firmware for ESP32-C3
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: 'v5.1' # C3 stable platform release version
+          target: 'esp32c3'
+          path: '.'
+
+      - name: Upload Compiled Binary Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp32c3-sniffer-firmware
+          path: |
+            build/bootloader/bootloader.bin
+            build/partition_table/partition-table.bin
+            build/esp32sniffer.bin
+            build/flasher_args.json
